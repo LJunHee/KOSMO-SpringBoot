@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+</head>
+<body>
+<div>
+	<a href="/">home</a>
+	<a href="/intro">intro</a>
+	<a href="/dept/">dept</a>
+	<a href="/login/">login</a>
+</div>
+<div class="container">
+	<h2 class="page-header">list page</h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>deptno</th>
+				<th>dname</th>
+				<th>loc</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="bean: ${alist}">
+				<td><a href="detail.html" th:href="${bean.deptno}" th:text="${bean.deptno}">1234</a></td>
+				<td><a href="detail.html" th:href="${bean.deptno}" th:text="${bean.dname}">dname</a></td>
+				<td><a href="detail.html" th:href="${bean.deptno}" th:text="${bean.loc}">location</a></td>
+			</tr>
+			<tr th:text="${''}">
+				<td><a href="detail.html">2345</a></td>
+				<td><a href="detail.html">dname2</a></td>
+				<td><a href="detail.html">loc2</a></td>
+			</tr>
+			<tr th:text="${''}">
+				<td><a href="detail.html">3456</a></td>
+				<td><a href="detail.html">dname3</a></td>
+				<td><a href="detail.html">loc3</a></td>
+			</tr>
+			<tr th:text="${''}">
+				<td><a href="detail.html">4567</a></td>
+				<td><a href="detail.html">dname4</a></td>
+				<td><a href="detail.html">loc4</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<a href="/dept/add.html" class="btn btn-primary btn-block">입력</a>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
