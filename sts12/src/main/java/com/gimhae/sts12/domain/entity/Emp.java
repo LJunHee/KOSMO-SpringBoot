@@ -2,6 +2,7 @@ package com.gimhae.sts12.domain.entity;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,12 +24,16 @@ public class Emp {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int empno;
+	@Column(length = 10)
 	String ename;
+	@Column(length = 10)
 	String job;
 	LocalDateTime hiredate;
+	
+//	@Column(nullable = true)
 	@ManyToOne(fetch = FetchType.LAZY)//
-	@JoinColumn(name = "dept")
-	Dept dept;
+	@JoinColumn(name = "deptno")
+	Dept deptno;
 }
 
 

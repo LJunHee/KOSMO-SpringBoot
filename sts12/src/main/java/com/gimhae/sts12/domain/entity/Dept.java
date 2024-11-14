@@ -3,6 +3,7 @@ package com.gimhae.sts12.domain.entity;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,10 +22,12 @@ import lombok.NoArgsConstructor;
 public class Dept {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	int deptno;
+	int deptNo;
+	@Column(length = 10, nullable = false, unique = true)
 	String dname;
-	String loc;
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "dept")
+	@Column(name = "loc")
+	String location;
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "deptno")
 	List<Emp> emps;
 }
 
