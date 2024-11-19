@@ -1,5 +1,7 @@
 package com.gimhae.sts14;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,9 +14,11 @@ import com.gimhae.sts14.service.DeptService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
@@ -37,13 +41,19 @@ public class Sts14Application implements CommandLineRunner {
 		deptService.pushList(DeptVo.builder().dname("tester04").loc("부산").build());
 	}
 	
-	@CrossOrigin
+	@CrossOrigin(origins = {"http://192.168.54.72:3000",
+	                        "http://localhost:3000",
+	                        "http://127.0.0.1"
+							}, methods = RequestMethod.GET)
 	@GetMapping("/dept/")
 	public ResponseEntity<?> getMethodName() {
 		return ResponseEntity.ok(deptService.getList());
 	}
 	
-	@CrossOrigin
+	@CrossOrigin(origins = {"http://192.168.54.72:3000",
+				            "http://localhost:3000",
+				            "http://127.0.0.1"
+							}, methods = RequestMethod.POST)
 	@PostMapping("/dept/")
 	public ResponseEntity<?> add(@RequestBody DeptVo bean) {
 		try {
@@ -53,6 +63,13 @@ public class Sts14Application implements CommandLineRunner {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
+	@CrossOrigin
+	@GetMapping("/dept/{deptno}")
+	public Optional<DeptVo> getMethodName(@PathVariable int deptno) {
+		return deptService.getList(deptno);
+	}
+	
 	
 
 	

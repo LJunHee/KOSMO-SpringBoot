@@ -1,5 +1,7 @@
 package com.gimhae.sts14.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,13 @@ public class DeptService {
 	
 	public void pushList(DeptVo bean) {
 		deptRepo.save(bean.deptBuild());
+	}
+	
+	public Optional<DeptVo> getList(int deptno){
+		Dept dept = deptRepo.findById(deptno).get();
+		return Optional.of(
+				DeptVo.builder().deptno(dept.getDeptno())
+				.dname(dept.getDname()).loc(dept.getLoc()).build());
 	}
 	
 }
