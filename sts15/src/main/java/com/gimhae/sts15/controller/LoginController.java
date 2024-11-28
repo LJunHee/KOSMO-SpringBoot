@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gimhae.sts15.model.UsersRepo;
 import com.gimhae.sts15.model.UsersVo;
+import com.gimhae.sts15.service.JwtService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -27,17 +28,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin(origins = "http://localhost:3000",methods = {RequestMethod.GET,RequestMethod.POST})
 public class LoginController {
 	final UsersRepo usersRepo;
+	final JwtService jwtService;
 	ResponseEntity<?> resp;
 
 	@PostMapping("")
 	public ResponseEntity<?> login(String id,String pw,HttpSession session) {
 		usersRepo.findByEmailAndPw(id, pw).ifPresentOrElse(entity -> {
 			UsersVo bean = entity.toVo();
-//			resp=ResponseEntity.ok(bean);
-			resp=ResponseEntity.ok().body(bean);
-			session.setAttribute("result", true);
-			session.setAttribute("num", bean.getNum());
-			log.debug("로그인됨");
+			String token=jwtService.createToken(id);
+			resp=ResponseEntity.ok().body(token);
 		}, () -> {
 			resp=ResponseEntity.badRequest().build();
 		});

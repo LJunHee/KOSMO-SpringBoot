@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.gimhae.sts15.model.DeptRepo;
 import com.gimhae.sts15.model.DeptVo;
 import com.gimhae.sts15.model.UsersRepo;
 import com.gimhae.sts15.model.UsersVo;
+import com.gimhae.sts15.service.JwtService;
 
 @SpringBootApplication
 public class Sts15Application implements CommandLineRunner{
@@ -38,8 +40,15 @@ public class Sts15Application implements CommandLineRunner{
 				DeptVo.builder().dname("test3").loc("test").build(),
 				DeptVo.builder().dname("test4").loc("test").build()
 				).forEach(vo->deptRepo.save(vo.toEntity()));
+		
+		String token=jwtService.createToken("user1@localhost");
+		System.out.println("token:"+token);
+		String email=jwtService.getAuthEmail(token);
+		System.out.println("email:"+email);
 	}
 
+	@Autowired
+	JwtService jwtService;
 }
 
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gimhae.sts15.model.DeptRepo;
 import com.gimhae.sts15.model.DeptVo;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,15 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dept/")
-@CrossOrigin(origins = "http://localhost:3000",methods = {RequestMethod.GET,RequestMethod.POST})
+//@CrossOrigin(origins = "http://*",methods = {RequestMethod.GET,RequestMethod.POST},exposedHeaders = {"Authorization", "Content-Type"})
 public class DeptController {
 	final DeptRepo deptRepo;
 	ResponseEntity resp=ResponseEntity.status(401).build();
-
 	@GetMapping("")
-	public ResponseEntity<?> list(HttpSession session) {
-		
-		if(session.getAttribute("result")==null) return resp;
+	public ResponseEntity<?> list(HttpSession session,HttpServletRequest req) {
+		System.out.println("->"+req.getHeader("Authorization"));
 		log.debug("login ok");
 		List<Object> list = new ArrayList<>();
 		deptRepo.findAll().forEach(entity->list.add(entity.toVo()));

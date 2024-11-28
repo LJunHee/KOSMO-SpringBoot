@@ -1,6 +1,7 @@
 package com.gimhae.sts15.service;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ public class JwtService {
 
 	//발급
 	public String createToken(String email) {
+		System.out.println(key.toString());
+		System.out.println(new String(key.getEncoded()));
 		String token=Jwts.builder()
 		.addClaims(Map.of("email",email))
 		.setExpiration(new Date(System.currentTimeMillis()+1000*60))
